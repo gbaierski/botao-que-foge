@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botão que foge</title>
+    <style>
+        h1 {
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        button {
+            width: 150px;
+            height: 40px;
+            color: white;
+            font-size: large;
+            font-weight: bold;
+            font-family: sans-serif;
+            background-color: rgb(67, 161, 67);
+            border: none;
+            border-radius: 5px;
+        }
+
+        #attempts {
+            text-align: center;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        #buttonBox {
+            width: 650px;
+            height: 540px;
+            background-color: rgb(220, 220, 220);
+            border-radius: 5px;
+        }
+
+        #alignCenter {
+            display: flex;
+            justify-content: center;
+        }
+
+        #laughtText {
+            width: 650px;
+            height: 200px;
+            overflow: auto;
+            background-color: rgb(240, 240, 240);
+            margin-top: 50px;
+            font-family: sans-serif;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Por favor, clique no botão:</h1>
+    <section id="alignCenter">
+        <div id="buttonBox">
+            <button type="button" id="button" onmouseover="foge()" onclick="clicou()" tabindex="-1">Clique aqui</button>
+        </div>
+    </section>
+    <section id="alignCenter">
+        <div id="laughtText"></div>
+    </section>
+    <h3 id="attempts"></h3>
+    <script>
+        foge();
+        reset();
+
+
+        function reset () {
+            margin = "0px 0px 0px 0px";
+            pos = 0;
+            laught = 10;
+            attempts = 0;
+
+            setTimeout(() => {
+                document.getElementById("laughtText").innerHTML = "";
+            }, "50");
+        }
+
+        function foge() {
+            setTimeout(() => { 
+                marginArray = ["0px 0px 0px 0px", "0px 0px 0px 500px", "500px 0px 0px 500px", "500px 0px 0px 0px"];
+                laught += 5;
+
+                document.getElementById("button").style = "margin: " + marginArray[pos];
+                document.getElementById("laughtText").innerHTML += "HA";
+                document.getElementById("laughtText").style = "font-size: " + laught + "px";
+                if(pos != 3) {
+                    var actualPos = pos;
+                    while (actualPos == pos) {
+                        pos = Math.floor(Math.random() * 4);
+                    }
+                } else {
+                    pos = 0;
+                }
+                attempts++;
+            }, "50");
+        }
+
+        function clicou () {
+            setTimeout(() => { 
+                attempts -=2;
+
+                attempts == "NaN" ? attempts = 0 : attempts;
+
+                document.getElementById("attempts").innerHTML = "Número de vezes que falhou: " + attempts;
+                document.getElementById("laughtText").style = "font-size: 100px; text-align: center";
+                document.getElementById("laughtText").innerHTML = "PARABÉNS";
+                document.getElementById("buttonBox").style="opacity: 0.3";
+                setTimeout(() => { 
+                    reset();
+                    document.getElementById("buttonBox").style="opacity: 1";
+                    document.getElementById("attempts").innerHTML = "";
+                }, "5000");
+            }, "100");
+        }
+    </script>
+</body>
+</html>
